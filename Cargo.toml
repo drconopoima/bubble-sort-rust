@@ -1,0 +1,12 @@
+[package]
+name = "bubble-sort-rust"
+description = "Bubble sort algorithm implementation. Built in Rust"
+version = "0.1.0"
+authors = ["Luis Jesus Diaz Manzo <luis@drconopoima.com>"]
+edition = "2018"
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/drconopoima/bubble-sort-rust"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
