@@ -8,7 +8,7 @@ pub fn bubble_sort<T: PartialOrd + Debug>(list: &mut [T]) {
         let right_limit = limit_precursor.ceil() as usize;
         let left_limit = limit_precursor.floor() as usize;
         if ext_idx % 2 == 0 {
-            for int_idx in (0 + left_limit)..(list.len() - 1 - right_limit) {
+            for int_idx in left_limit..(list.len() - 1 - right_limit) {
                 if list[int_idx] > list[int_idx + 1] {
                     sorted = false;
                     list.swap(int_idx, int_idx + 1);
