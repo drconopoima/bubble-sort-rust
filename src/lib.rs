@@ -1,28 +1,32 @@
 use std::fmt::Debug;
 
 pub fn bubble_sort<T: PartialOrd + Debug>(list: &mut [T]) {
-    println!("original: {:?}", list);
+    // println!("original: {:?}", list);
     let mut right_skip = 1;
     let mut left_skip = 1;
     let mut last_swap_idx;
     let length = list.len();
+    // Traverse through all array elements
     for ext_idx in 0..length {
         let mut sorted = true;
         let half_ext_idx = ext_idx as f32 / 2f32;
         if half_ext_idx as usize != 0 {
+            // Each forward (pair) pass requires 1 less check at the end
             let ceil_right = half_ext_idx.ceil() as usize;
             if right_skip < ceil_right {
                 right_skip = ceil_right;
             }
+            // Each backwards (odd) pass requires 1 less check at the beginning
             let floor_left = ceil_right - 1;
             if left_skip < floor_left {
                 left_skip = floor_left;
             }
         }
         last_swap_idx = 0;
+        // Alternating backwards/forwards passes.
         if ext_idx % 2 == 0 {
-            // println!("right_skip before fwd: {:?}", right_skip);
-            // println!("left_skip before fwd: {:?}", left_skip);
+            // Traverse forwards slice of unsorted elements
+            // skipping known sorted elements at both ends
             for int_idx in left_skip..(length - right_skip) {
                 if list[int_idx] > list[int_idx + 1] {
                     sorted = false;
@@ -30,14 +34,14 @@ pub fn bubble_sort<T: PartialOrd + Debug>(list: &mut [T]) {
                     last_swap_idx = int_idx;
                 }
             }
+            // Skip not swapped elements at the end
             if last_swap_idx != 0 {
                 right_skip = length - last_swap_idx - 1;
             }
-            // println!("right_skip after fwd: {:?}", right_skip);
-            println!("forward: {:?}", list);
+        // println!("forward: {:?}", list);
         } else {
-            // println!("right_skip before bck: {:?}", right_skip);
-            // println!("left_skip before bck: {:?}", left_skip);
+            // Traverse backwards slice of unsorted elements
+            // skipping known sorted elements at both ends
             for int_idx in (left_skip..(length - right_skip)).rev() {
                 if list[int_idx] < list[int_idx - 1] {
                     sorted = false;
@@ -45,12 +49,13 @@ pub fn bubble_sort<T: PartialOrd + Debug>(list: &mut [T]) {
                     last_swap_idx = int_idx;
                 }
             }
+            // Skip not swapped elements at the beginning
             if last_swap_idx != 0 {
                 left_skip = last_swap_idx;
             }
-            // println!("left_skip after bck: {:?}", left_skip);
-            println!("backward: {:?}", list);
+            // println!("backward: {:?}", list);
         }
+        // If no two elements were swapped by inner loop, then break
         if sorted {
             return;
         }
